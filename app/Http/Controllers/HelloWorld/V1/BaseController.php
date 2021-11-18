@@ -19,11 +19,11 @@ abstract class BaseController extends Controller {
     
     protected function validateRequiredParams($params) {
         $response = ['status' => 0, 'data' => []];
-        if (empty($params['name']) && !in_array(strtolower($params['route']->getActionMethod()), ['fetch', 'delete'])) {
+        if (empty($params['name']) && !in_array(strtolower($params['route']->getActionMethod()), ['fetch', 'trashed', 'delete', 'restore'])) {
             $response['message'] = __('message.INVALID_PARAMS');
             return $response;
         }
-        if (empty($params['id']) && in_array(strtolower($params['route']->getActionMethod()), ['delete', 'update'])) {
+        if (empty($params['id']) && in_array(strtolower($params['route']->getActionMethod()), ['delete', 'update', 'restore'])) {
             $response['message'] = __('message.INVALID_PARAMS');
             return $response;
         }

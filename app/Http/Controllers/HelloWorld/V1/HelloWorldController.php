@@ -37,5 +37,11 @@ class HelloWorldController extends BaseController {
     public function update(Route $route, Request $request, $id, $name) {
         return $this->validateRequiredParams(['id' => $id, 'name' => $name, 'request' => $request, 'route' => $route]);
     }
+    public function restore(Route $route, Request $request, $id) {
+        return $this->validateRequiredParams(['id' => $id, 'request' => $request, 'route' => $route]);
+    }
+    public function trashed(Route $route, Request $request) {
+        return $this->validateRequiredParams(['request' => $request, 'route' => $route]);
+    }
 }
 ?>

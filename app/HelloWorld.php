@@ -35,6 +35,16 @@ class HelloWorld extends Model
                 $this->response['data'] = $names;
                 $this->response['message'] = __('HelloWorldConstants._NAMES_FETCH_SUCCESS_');
                 return $this->response;
+            case "trashed":
+                $names = $this->onlyTrashed()->get();
+                if(empty($names)) {
+                    $this->response['message'] = __('HelloWorldConstants._NAMES_FETCH_FAILED_');
+                    return $this->response;
+                }
+                $this->response['status'] = 1;
+                $this->response['data'] = $names;
+                $this->response['message'] = __('HelloWorldConstants._NAMES_FETCH_SUCCESS_');
+                return $this->response;
             case "update":
                 $row = $this->find($params['id']);
                 if(empty($row)) {
@@ -57,6 +67,15 @@ class HelloWorld extends Model
                 }
                 $this->response['status'] = 1;
                 $this->response['message'] =  __('HelloWorldConstants._NAME_DELETE_SUCCESS_');
+                return $this->response;
+            case "restore":
+                $row = $this->onlyTrashed($params['id'])->get();
+                if(empty($row) || !$this->onlyTrashed($params['id'])->restore()) {
+                    $this->response['message'] =  __('HelloWorldConstants._NAME_RESTORE_FAILED_');
+                    return $this->response;
+                }
+                $this->response['status'] = 1;
+                $this->response['message'] =  __('HelloWorldConstants._NAME_RESTORE_SUCCESS_');
                 return $this->response;
         }
     }
